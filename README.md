@@ -1,4 +1,4 @@
-Consumer Producer Problem With Passwords
+Consumer-producer problem with passwords.
 ====================================
 
 TDD technique was used to develop most of logic.
