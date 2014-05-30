@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using NUnit.Framework;
-using Passwords;
+using CustomText;
 
 namespace ProducersConsumersWithPasswords
 {
@@ -14,7 +14,7 @@ namespace ProducersConsumersWithPasswords
         [Test]
         public void ReturnsConsumerObject()
         {
-            Password password = new Password("abc");
+            FormattedText password = new FormattedText("abc");
             PasswordConsumer consumer = new PasswordConsumer(password);
             Assert.IsNotNull(password);
         }
@@ -22,7 +22,7 @@ namespace ProducersConsumersWithPasswords
         [Test]
         public void ThrowsExceptionWhenPassingNullReferenceArgumentToConstructor()
         {
-            Password password = null;
+            FormattedText password = null;
             Assert.Throws(typeof(NullReferenceException), delegate()
             {
                 PasswordConsumer consumer = new PasswordConsumer(password);
@@ -32,8 +32,8 @@ namespace ProducersConsumersWithPasswords
         [Test]
         public void StartConsumption_ThrowsExceptionWhenPassingNullReferenceArgument()
         {
-            SmartWarehouse<Password> warehoue = null;
-            PasswordConsumer consumer = new PasswordConsumer(new Password("abc"));
+            SmartWarehouse<FormattedText> warehoue = null;
+            PasswordConsumer consumer = new PasswordConsumer(new FormattedText("abc"));
             Assert.Throws(typeof(NullReferenceException), delegate()
             {
                 consumer.StartConsumption(warehoue);
@@ -43,8 +43,8 @@ namespace ProducersConsumersWithPasswords
         [Test]
         public void StartConsumption_ThrowsExceptionWhenConsumptionAlreadyStarted()
         {
-            SmartWarehouse<Password> warehoue = new SmartWarehouse<Password>(20);
-            PasswordConsumer consumer = new PasswordConsumer(new Password("abc"));
+            SmartWarehouse<FormattedText> warehoue = new SmartWarehouse<FormattedText>(20);
+            PasswordConsumer consumer = new PasswordConsumer(new FormattedText("abc"));
             consumer.StartConsumption(warehoue);
             Assert.Throws(typeof(InvalidOperationException), delegate()
             {

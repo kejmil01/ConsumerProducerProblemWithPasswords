@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Passwords;
+using CustomText;
 
 namespace ProducersConsumersWithPasswords
 {
@@ -12,7 +12,7 @@ namespace ProducersConsumersWithPasswords
     {
         private List<PasswordProducer> producers = new List<PasswordProducer>();
         private List<PasswordConsumer> consumers = new List<PasswordConsumer>();
-        private SmartWarehouse<Password> warehouse;
+        private SmartWarehouse<FormattedText> warehouse;
 
         public bool ProductionStarted
         {
@@ -29,7 +29,7 @@ namespace ProducersConsumersWithPasswords
         private object synchronizationObject = new object();
         private int passwordFoundByConsumerCounter = 0;
 
-        public PasswordDistributor(SmartWarehouse<Password> warehouse)
+        public PasswordDistributor(SmartWarehouse<FormattedText> warehouse)
         {
             if (warehouse == null)
                 throw new NullReferenceException();

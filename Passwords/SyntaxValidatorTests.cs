@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using NUnit.Framework;
 
-namespace Passwords
+namespace CustomText
 {
     [TestFixture]
     public class SyntaxValidatorTests

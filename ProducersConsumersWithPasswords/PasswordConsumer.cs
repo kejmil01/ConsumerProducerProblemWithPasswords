@@ -4,13 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Passwords;
+using CustomText;
 
 namespace ProducersConsumersWithPasswords
 {
     public class PasswordConsumer
     {       
-        private Password desiredPassword;
+        private FormattedText desiredPassword;
 
         private volatile bool cancelationFlag = false;
         private object synchronizationObject = new object();
@@ -25,7 +25,7 @@ namespace ProducersConsumersWithPasswords
             private set;
         }
 
-        public Password DesiredPassword
+        public FormattedText DesiredPassword
         {
             get { return desiredPassword; }
         }
@@ -36,7 +36,7 @@ namespace ProducersConsumersWithPasswords
             set { passwordTakingMaxiumTime = value; }
         }
 
-        public PasswordConsumer(Password desiredPassword)
+        public PasswordConsumer(FormattedText desiredPassword)
         {
             if (desiredPassword == null)
                 throw new NullReferenceException();
@@ -44,7 +44,7 @@ namespace ProducersConsumersWithPasswords
             IsConsumtionInProgress = false;
         }
 
-        public void StartConsumption(SmartWarehouse<Password> warehouse)
+        public void StartConsumption(SmartWarehouse<FormattedText> warehouse)
         {
             if (warehouse == null)
                 throw new NullReferenceException();
@@ -70,7 +70,7 @@ namespace ProducersConsumersWithPasswords
             }
         }
 
-        private void Consumption(SmartWarehouse<Password> warehouse)
+        private void Consumption(SmartWarehouse<FormattedText> warehouse)
         {
             cancelationFlag = false;
             bool passwordFound = false;
@@ -78,7 +78,7 @@ namespace ProducersConsumersWithPasswords
             while (!cancelationFlag && !passwordFound)
             {
                 Console.WriteLine("Consumer is trying to take the Password.");
-                Password temporaryPassword;
+                FormattedText temporaryPassword;
                 bool passwordWasTaken = warehouse.TryTake(out temporaryPassword, PasswordTakingMaximumTime);
 
                 if (passwordWasTaken)

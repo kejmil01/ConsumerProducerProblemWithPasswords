@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading;
-using Passwords;
+using CustomText;
 
 namespace ProducersConsumersWithPasswords
 {
@@ -11,12 +11,12 @@ namespace ProducersConsumersWithPasswords
     {
         internal class Worker
         {
-            public SmartWarehouse<Password> warehouse;
+            public SmartWarehouse<FormattedText> warehouse;
             public Thread thread;
         }
 
         [ThreadStatic]
-        private PasswordGenerator generator;
+        private PermutationGenerator generator;
 
         private List<Worker> workers = new List<Worker>();
         private object workersLocker = new object();
@@ -28,11 +28,11 @@ namespace ProducersConsumersWithPasswords
             set;
         }
 
-        public PasswordProducer(PasswordAlphabet alphabet)
-            : this(new PasswordGenerator(alphabet))
+        public PasswordProducer(FormattedText alphabet)
+            : this(new PermutationGenerator(alphabet))
         { }
 
-        public PasswordProducer(PasswordGenerator generator)
+        public PasswordProducer(PermutationGenerator generator)
         {
             if (generator == null)
                 throw new NullReferenceException();
@@ -41,7 +41,7 @@ namespace ProducersConsumersWithPasswords
             PasswordAdditionMaximumTime = 1000;
         }
 
-        public void StartProduction(SmartWarehouse<Password> warehouse)
+        public void StartProduction(SmartWarehouse<FormattedText> warehouse)
         {
             if (warehouse == null)
                 throw new NullReferenceException();
@@ -55,7 +55,7 @@ namespace ProducersConsumersWithPasswords
             }
         }
 
-        private bool warehouseAlreadyOnList(SmartWarehouse<Password> warehouse)
+        private bool warehouseAlreadyOnList(SmartWarehouse<FormattedText> warehouse)
         {
             bool onList = false;
             foreach (Worker w in workers)
@@ -67,7 +67,7 @@ namespace ProducersConsumersWithPasswords
             return onList;
         }
 
-        private void AddNewWorker(SmartWarehouse<Password> pWarehouse)
+        private void AddNewWorker(SmartWarehouse<FormattedText> pWarehouse)
         {
             Worker newWorker = new Worker
             {
@@ -83,7 +83,7 @@ namespace ProducersConsumersWithPasswords
             int workerID = (int)id;
             while (!cancelationFlag)
             {
-                Password password = generator.GenerateNext();
+                FormattedText password = generator.GenerateNext();
                 Console.WriteLine("Producer is trying to add the Password.");
                 bool success = workers[workerID].warehouse.TryAdd(password, PasswordAdditionMaximumTime);
 

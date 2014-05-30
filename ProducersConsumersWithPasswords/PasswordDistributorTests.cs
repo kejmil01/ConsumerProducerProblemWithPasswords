@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using NUnit.Framework;
-using Passwords;
+using CustomText;
 
 namespace ProducersConsumersWithPasswords
 {
@@ -14,7 +14,7 @@ namespace ProducersConsumersWithPasswords
         [Test]
         public void ReturnsPasswordDistributorObject()
         {
-            SmartWarehouse<Password> warehouse = new SmartWarehouse<Password>(20);
+            SmartWarehouse<FormattedText> warehouse = new SmartWarehouse<FormattedText>(20);
             PasswordDistributor distributor = new PasswordDistributor(warehouse);
             Assert.IsNotNull(distributor);
         }
@@ -22,7 +22,7 @@ namespace ProducersConsumersWithPasswords
         [Test]
         public void ThrowsExceptionWhenPassingNullReferenceToConstructor()
         {
-            SmartWarehouse<Password> warehouse = null;
+            SmartWarehouse<FormattedText> warehouse = null;
             Assert.Throws(typeof(NullReferenceException), delegate()
             {
                 PasswordDistributor distributor = new PasswordDistributor(warehouse);
@@ -32,7 +32,7 @@ namespace ProducersConsumersWithPasswords
         [Test]
         public void AddProducer_ThrowsExceptionWhenPassingNullReference()
         {
-            SmartWarehouse<Password> warehouse = new SmartWarehouse<Password>(20);
+            SmartWarehouse<FormattedText> warehouse = new SmartWarehouse<FormattedText>(20);
             PasswordDistributor distributor = new PasswordDistributor(warehouse);
             Assert.Throws(typeof(NullReferenceException), delegate()
             {
@@ -43,7 +43,7 @@ namespace ProducersConsumersWithPasswords
         [Test]
         public void AddConsumer_ThrowsExceptionWhenPassingNullReference()
         {
-            SmartWarehouse<Password> warehouse = new SmartWarehouse<Password>(20);
+            SmartWarehouse<FormattedText> warehouse = new SmartWarehouse<FormattedText>(20);
             PasswordDistributor distributor = new PasswordDistributor(warehouse);
             Assert.Throws(typeof(NullReferenceException), delegate()
             {
@@ -54,9 +54,9 @@ namespace ProducersConsumersWithPasswords
         [Test]
         public void AddProducer_ThrowsExceptionWhenPassingSameProducerMoreThanOnce()
         {
-            SmartWarehouse<Password> warehouse = new SmartWarehouse<Password>(20);
+            SmartWarehouse<FormattedText> warehouse = new SmartWarehouse<FormattedText>(20);
             PasswordDistributor distributor = new PasswordDistributor(warehouse);
-            PasswordProducer producer = new PasswordProducer(new PasswordAlphabet("abc"));
+            PasswordProducer producer = new PasswordProducer(new FormattedText("abc"));
             distributor.AddProducer(producer);
             Assert.Throws(typeof(ArgumentException), delegate()
             {
@@ -67,9 +67,9 @@ namespace ProducersConsumersWithPasswords
         [Test]
         public void AddConsumer_ThrowsExceptionWhenPassingSameConsumerMoreThanOnce()
         {
-            SmartWarehouse<Password> warehouse = new SmartWarehouse<Password>(20);
+            SmartWarehouse<FormattedText> warehouse = new SmartWarehouse<FormattedText>(20);
             PasswordDistributor distributor = new PasswordDistributor(warehouse);
-            PasswordConsumer consumer = new PasswordConsumer(new Password("cba"));
+            PasswordConsumer consumer = new PasswordConsumer(new FormattedText("cba"));
             distributor.AddConsumer(consumer);
             Assert.Throws(typeof(ArgumentException), delegate()
             {
@@ -80,9 +80,9 @@ namespace ProducersConsumersWithPasswords
         [Test]
         public void StartProduction_ThrowsExceptionWhenTryingToCallMethodWhenProductionIsNotStopped()
         {
-            SmartWarehouse<Password> warehouse = new SmartWarehouse<Password>(20);
+            SmartWarehouse<FormattedText> warehouse = new SmartWarehouse<FormattedText>(20);
             PasswordDistributor distributor = new PasswordDistributor(warehouse);
-            PasswordProducer producer = new PasswordProducer(new PasswordAlphabet("abc"));
+            PasswordProducer producer = new PasswordProducer(new FormattedText("abc"));
             producer.PasswordAdditionMaximumTime = 20;
             distributor.AddProducer(producer);
 
@@ -97,9 +97,9 @@ namespace ProducersConsumersWithPasswords
         [Test]
         public void StartConsumption_ThrowsExceptionWhenTryingToCallMethodWhenConsumptionIsNotStopped()
         {
-            SmartWarehouse<Password> warehouse = new SmartWarehouse<Password>(20);
+            SmartWarehouse<FormattedText> warehouse = new SmartWarehouse<FormattedText>(20);
             PasswordDistributor distributor = new PasswordDistributor(warehouse);
-            PasswordConsumer consumer = new PasswordConsumer(new Password("cba"));
+            PasswordConsumer consumer = new PasswordConsumer(new FormattedText("cba"));
             consumer.PasswordTakingMaximumTime = 20;
             distributor.AddConsumer(consumer);
 

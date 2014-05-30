@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using NUnit.Framework;
-using Passwords;
+using CustomText;
 
 namespace ProducersConsumersWithPasswords
 {
@@ -14,11 +14,11 @@ namespace ProducersConsumersWithPasswords
         [Test]
         public void ReturnsPasswordProducerObject()
         {
-            PasswordAlphabet alphabet = new PasswordAlphabet("abc");
+            FormattedText alphabet = new FormattedText("abc");
             PasswordProducer pp = new PasswordProducer(alphabet);
             Assert.IsNotNull(pp);
 
-            PasswordGenerator generator = new PasswordGenerator(alphabet);
+            PermutationGenerator generator = new PermutationGenerator(alphabet);
             pp = new PasswordProducer(generator);
             Assert.IsNotNull(pp);
         }
@@ -26,13 +26,13 @@ namespace ProducersConsumersWithPasswords
         [Test]
         public void ThrowsExceptionWhenPassingNullReferenceArgumentToConstructor()
         {
-            PasswordAlphabet alphabet = null;
+            FormattedText alphabet = null;
             Assert.Throws(typeof(NullReferenceException), delegate()
             {
                 PasswordProducer pp = new PasswordProducer(alphabet);
             });
 
-            PasswordGenerator generator = null;
+            PermutationGenerator generator = null;
             Assert.Throws(typeof(NullReferenceException), delegate()
             {
                 PasswordProducer pp = new PasswordProducer(generator);
@@ -42,8 +42,8 @@ namespace ProducersConsumersWithPasswords
         [Test]
         public void StartProduction_ThrowsExceptionWhenPassingNullReferenceArgument()
         {
-            SmartWarehouse<Password> warehoue = null;
-            PasswordProducer pp = new PasswordProducer(new PasswordAlphabet("abc"));
+            SmartWarehouse<FormattedText> warehoue = null;
+            PasswordProducer pp = new PasswordProducer(new FormattedText("abc"));
             Assert.Throws(typeof(NullReferenceException), delegate()
             {
                 pp.StartProduction(warehoue);
@@ -53,8 +53,8 @@ namespace ProducersConsumersWithPasswords
         [Test]
         public void StopProduction_SuccessfullyStopsProduction()
         {
-            SmartWarehouse<Password> warehouse = new SmartWarehouse<Password>(20);
-            PasswordProducer pp = new PasswordProducer(new PasswordAlphabet("abc"));
+            SmartWarehouse<FormattedText> warehouse = new SmartWarehouse<FormattedText>(20);
+            PasswordProducer pp = new PasswordProducer(new FormattedText("abc"));
             Assert.DoesNotThrow(delegate()
             {
                 pp.StartProduction(warehouse);

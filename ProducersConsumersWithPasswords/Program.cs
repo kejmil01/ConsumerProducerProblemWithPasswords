@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading;
-using Passwords;
+using CustomText;
 
 namespace ProducersConsumersWithPasswords
 {
@@ -11,21 +11,21 @@ namespace ProducersConsumersWithPasswords
     {
         static void Main(string[] args)
         {
-            SmartWarehouse<Password> warehouse = new SmartWarehouse<Password>(20);
-            PasswordProducer pp = new PasswordProducer(new PasswordAlphabet("abc"));
-            PasswordConsumer pc = new PasswordConsumer(new Password("cba"));
+            SmartWarehouse<FormattedText> warehouse = new SmartWarehouse<FormattedText>(20);
+            PasswordProducer pp = new PasswordProducer(new FormattedText("abc"));
+            PasswordConsumer pc = new PasswordConsumer(new FormattedText("cba"));
 
             PasswordDistributor distributor = new PasswordDistributor(warehouse);
             distributor.AddProducer(pp);
             distributor.AddConsumer(pc);
             distributor.StartConsumption();
 
-            PasswordConsumer consumer = new PasswordConsumer(new Password("bca"));
+            PasswordConsumer consumer = new PasswordConsumer(new FormattedText("bca"));
             distributor.AddConsumer(consumer);
 
             distributor.StartProduction();
 
-            PasswordProducer producer = new PasswordProducer(new PasswordAlphabet("abc"));
+            PasswordProducer producer = new PasswordProducer(new FormattedText("abc"));
             distributor.AddProducer(producer);
 
             Console.ReadLine();

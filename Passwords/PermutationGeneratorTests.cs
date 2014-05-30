@@ -5,37 +5,37 @@ using System.Text;
 using System.Threading.Tasks;
 using NUnit.Framework;
 
-namespace Passwords
+namespace CustomText
 
 {
     [TestFixture]
-    public class PasswordGeneratorTests
+    public class PermutationGeneratorTests
     {
 
         [Test]
-        public void ReturnsPasswordGeneratorObject()
+        public void ReturnsPermutationGeneratorObject()
         {
-            PasswordAlphabet alphabet = new PasswordAlphabet("abc");
-            PasswordGenerator generator = new PasswordGenerator(alphabet);
+            FormattedText alphabet = new FormattedText("abc");
+            PermutationGenerator generator = new PermutationGenerator(alphabet);
             Assert.IsNotNull(generator);
         }
 
         [Test]
         public void ThrowsExceptionWhenPassingNullReferenceToConstructor()
         {
-            PasswordAlphabet alphabet = null;
+            FormattedText alphabet = null;
             Assert.Throws(typeof(NullReferenceException), delegate()
             {
-                PasswordGenerator generator = new PasswordGenerator(alphabet);
+                PermutationGenerator generator = new PermutationGenerator(alphabet);
             });
         }
 
         [Test]
         public void GenerateNext_GeneratesPasswordFromAlphabet()
         {
-            PasswordAlphabet alphabet = new PasswordAlphabet("ab");
-            PasswordGenerator generator = new PasswordGenerator(alphabet);
-            Password password = generator.GenerateNext();
+            FormattedText alphabet = new FormattedText("ab");
+            PermutationGenerator generator = new PermutationGenerator(alphabet);
+            FormattedText password = generator.GenerateNext();
 
             Assert.IsNotNull(password);
             Assert.AreEqual("ab", password.Text);

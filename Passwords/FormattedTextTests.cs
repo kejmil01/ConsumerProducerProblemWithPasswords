@@ -5,15 +5,15 @@ using System.Text;
 using System.Threading.Tasks;
 using NUnit.Framework;
 
-namespace Passwords
+namespace CustomText
 {
     [TestFixture]
-    public class PasswordTests
+    public class FormattedTextTests
     {
         [Test]
-        public void ReturnsPasswordObject()
+        public void ReturnsFormattedTextObject()
         {
-            Password p = new Password("abc");
+            FormattedText p = new FormattedText("abc");
             Assert.IsNotNull(p);
         }
 
@@ -22,7 +22,7 @@ namespace Passwords
         {
             Assert.Throws(typeof(ArgumentException), delegate()
             {
-                Password p = new Password("aa");
+                FormattedText p = new FormattedText("aa");
             });
         }
 
@@ -32,7 +32,7 @@ namespace Passwords
             string testString = null;
             Assert.Throws(typeof(NullReferenceException), delegate()
             {
-                Password p = new Password(testString);
+                FormattedText p = new FormattedText(testString);
             });
         }
     }
